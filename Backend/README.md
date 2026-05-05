@@ -1,1 +1,0 @@
-# The backend is writen in these files. such as api endpoints.

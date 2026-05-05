@@ -1,0 +1,25 @@
+let express = require("express");
+let app = express();
+let mongoose = require("mongoose");
+let cors = require("cors");
+require("dotenv").config();
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+let Usermodel = require("./models/schema");
+
+async function main() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("✅ Connected to MongoDB Atlas");
+  } catch (error) {
+    console.log("❌ Cannot connect to MongoDB Atlas", error);
+  }
+}
+main();
+
+app.listen(5000, () => {
+  console.log("listing on 5000 port");
+});
