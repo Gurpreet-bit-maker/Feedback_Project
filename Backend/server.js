@@ -3,6 +3,9 @@ let app = express();
 let mongoose = require("mongoose");
 let cors = require("cors");
 require("dotenv").config();
+let reviewRead_Router = require("./routes/reviewRouter");
+let reviewPost_Router = require("./routes/reviewPostRouter");
+let averageReview_Router = require("./routes/averageReviewRouter");
 
 app.use(cors());
 app.use(express.json());
@@ -18,29 +21,10 @@ async function main() {
 }
 main();
 
-//! models
-let feedbackModel = require("./models/schema");
-//* feedback store
-app.post("/feedback", async (req, res) => {
-  try {
-    let storedFeedback = await feedbackModel.create(req.body);
-    console.log(storedFeedback);
-    res.status(201).json("feedback stored successfully");
-  } catch (error) {
-    res.status(500).json("server side error");
-  }
-});
-app.get("/feedback", async (req, res) => {
-  try {
-    let fetchFeedback = await feedbackModel.find();
-    console.log(fetchFeedback);
-    res.status(201).json(fetchFeedback);
-  } catch (error) {
-    res.status(401).json("not found feedback");
-  }
-});
-
-
+//*  middlewares
+app.use("/", reviewPost_Router);
+app.use("/", reviewRead_Router);
+app.use("/", averageReview_Router);
 
 app.listen(3000, () => {
   console.log("listing on 5000 port");
