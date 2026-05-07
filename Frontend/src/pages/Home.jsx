@@ -10,7 +10,8 @@ export default function Home() {
   let { loading } = useLoader();
   let [textValue, setTextvalue] = useState("");
   let [rating, setRating] = useState();
-  let userFeedback = { msg: textValue, rating: rating };
+  let [userName, setUserName] = useState("");
+  let userFeedback = { msg: textValue, rating: rating, username: userName };
   let [ispending, setLoader] = useState();
   // Post feedback
   let postReview = async () => {
@@ -18,7 +19,9 @@ export default function Home() {
       if (userFeedback.msg !== "") {
         setLoader(true);
         await axios.post("http://localhost:3000/user", userFeedback);
+        setUserName("");
         setTextvalue("");
+
         console.log(userFeedback);
       } else {
         alert("please write any feedback");
@@ -68,7 +71,14 @@ export default function Home() {
         <h1 className="text-2xl font-semibold text-white text-center mb-4">
           Create Your Feedback
         </h1>
-
+        {/* username */}
+        <input
+          type="text"
+          value={userName}
+          placeholder="Enter name..."
+          className="border border-gray-300 p-2 rounded-md w-full placeholder:text-gray-400 outline-none"
+          onChange={(e) => setUserName(e.target.value)}
+        />
         {/* textarea */}
         <textarea
           className="w-full mt-10 border rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-400"

@@ -1,6 +1,8 @@
 let feedbackModel = require("../models/schema");
 
 exports.reviewPostMethod = async (req, res) => {
+  console.log(req.body);
+
   try {
     let storedFeedback = await feedbackModel.create(req.body);
     console.log(storedFeedback);
