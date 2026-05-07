@@ -81,7 +81,7 @@ export default function Home() {
         />
         {/* textarea */}
         <textarea
-          className="w-full mt-10 border rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-400"
+          className="w-full bg-white mt-10 border rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-400"
           rows="10"
           placeholder="Write feedback here..."
           onChange={(e) => setTextvalue(e.target.value)}
