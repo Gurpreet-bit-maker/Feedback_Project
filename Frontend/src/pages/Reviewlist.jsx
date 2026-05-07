@@ -4,8 +4,9 @@ import axios from "axios";
 import Rating from "@mui/material/Rating";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange, deepPurple } from "@mui/material/colors";
-import Buttons from "../components/Buttons";
+import Buttons from "../components/reviewCards/Buttons";
 import { useNavigate } from "react-router-dom";
+import CreatedAt from "../components/reviewCards/CreatedAt";
 
 export default function Reviewlist() {
   let navigate = useNavigate();
@@ -14,12 +15,11 @@ export default function Reviewlist() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/feedback")
+      .get("http://localhost:3000/user")
       .then((response) => {
         setTimeout(() => {
           setFeedbacks(response.data);
         }, 200);
-        console.log(response.data);
       })
       .catch((error) => console.log(error));
   }, [Ratings]);
@@ -81,7 +81,7 @@ export default function Reviewlist() {
                 <p className="text-xs text-gray-600 leading-relaxed mb-3">
                   {items.msg}
                 </p>
-
+                <CreatedAt key={index} createdData={items} />
                 <Buttons
                   feedbacks={feedbacks}
                   index={index}

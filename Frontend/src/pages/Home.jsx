@@ -4,8 +4,9 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import useLoader from "../custom/Loader";
+import Dashboard from "./Dashboard";
 
-export default function Review() {
+export default function Home() {
   let { loading } = useLoader();
   let [textValue, setTextvalue] = useState("");
   let [rating, setRating] = useState();
@@ -16,7 +17,7 @@ export default function Review() {
     try {
       if (userFeedback.msg !== "") {
         setLoader(true);
-        await axios.post("http://localhost:3000/feedback", userFeedback);
+        await axios.post("http://localhost:3000/user", userFeedback);
         setTextvalue("");
         console.log(userFeedback);
       } else {
@@ -34,7 +35,7 @@ export default function Review() {
   let [feedbackCounts, setsubject] = useState();
   useEffect(() => {
     axios
-      .get("http://localhost:3000/feedback")
+      .get("http://localhost:3000/user")
       .then((response) => {
         setsubject(response.data.length);
         console.log(feedbackCounts);
@@ -44,7 +45,7 @@ export default function Review() {
 
   return loading ? (
     <div className="bg-gray-100 py-12 flex justify-center h-190">
-      <div className="bg-white w-[420px]  rounded-xl shadow-lg p-6">
+      <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 w-[420px]  rounded-xl shadow-lg p-6">
         {/* Reviews link */}
         <div className="flex justify-between items-center mb-4">
           <NavLink
@@ -64,15 +65,15 @@ export default function Review() {
         </div>
 
         {/* Heading */}
-        <h1 className="text-2xl font-semibold text-gray-800 text-center mb-4">
+        <h1 className="text-2xl font-semibold text-white text-center mb-4">
           Create Your Feedback
         </h1>
 
         {/* textarea */}
         <textarea
-          className="w-full border rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-          rows="5"
-          placeholder="Write your feedback here..."
+          className="w-full mt-10 border rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-400"
+          rows="10"
+          placeholder="Write feedback here..."
           onChange={(e) => setTextvalue(e.target.value)}
           value={textValue}
         />
@@ -94,6 +95,7 @@ export default function Review() {
           </button>
         </div>
       </div>
+      <Dashboard />
     </div>
   ) : (
     <div className="flex justify-center items-center gap-2 py-20 h-200">

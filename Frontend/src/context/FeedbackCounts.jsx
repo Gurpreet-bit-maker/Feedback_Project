@@ -6,16 +6,16 @@ export let Run = (prop) => {
   let [feedbackCounts, setsubject] = useState();
   useEffect(() => {
     axios
-      .get("http://localhost:3000/feedback")
+      .get("http://localhost:3000/user/data")
       .then((response) => {
-        setsubject(response.data.length);
-
-        console.log(response.data);
+        setsubject(response.data);
       })
       .catch((error) => console.log(error));
   }, []);
 
   return (
-    <Result.Provider value={feedbackCounts}>{prop.children}</Result.Provider>
+    <Result.Provider value={{ feedbackCounts }}>
+      {prop.children}
+    </Result.Provider>
   );
 };
