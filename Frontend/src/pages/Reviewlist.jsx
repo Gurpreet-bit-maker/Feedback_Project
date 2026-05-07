@@ -23,6 +23,7 @@ export default function Reviewlist() {
       })
       .catch((error) => console.log(error));
   }, [Ratings]);
+  console.log(feedbacks);
 
   return (
     <div className="py-12 px-6 bg-gray-100 h-screen">
