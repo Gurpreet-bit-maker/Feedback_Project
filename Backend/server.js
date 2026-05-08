@@ -25,7 +25,7 @@ main();
 //*  middlewares
 app.use("/", reviewPost_Router);
 app.use("/", reviewRead_Router);
-app.use("/", averageReview_Router);
+// app.use("/", averageReview_Router);
 app.use("/", deletedRouter);
 
 app.listen(3000, () => {

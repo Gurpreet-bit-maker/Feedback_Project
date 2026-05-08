@@ -3,12 +3,13 @@ exports.averageMethod = async (req, res) => {
   const [name, ratinGte, totalReviws] = await Promise.all([
     // msg match
     feedbackModel.aggregate([
-      { $match: { role: "user", rating: { $gt: "3" } } },
+      // { $match: { username: "Komal" } },
+      // { $sort: { username: 1 } },
     ]),
 
     // feedbackModel.find({  }),
     // total reviews rating
     feedbackModel.countDocuments({}),
   ]);
-  res.send([...name, { totalReviws: ratinGte }]);
+  res.json(name);
 };

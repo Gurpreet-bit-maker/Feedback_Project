@@ -8,7 +8,7 @@ import { Reducer } from "./Reducer";
 import Home from "./pages/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Reviewlist from "./pages/Reviewlist";
-import Dashboard from "./pages/Dashboard";
+// import Dashboard from "./pages/Dashboard";
 import { Run } from "./context/FeedbackCounts";
 
 function App() {

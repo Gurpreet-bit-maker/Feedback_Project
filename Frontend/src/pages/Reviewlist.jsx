@@ -27,16 +27,16 @@ export default function Reviewlist() {
     }
   };
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3000/user`)
-      .then((response) => {
-        setTimeout(() => {
-          setFeedbacks(response.data);
-        }, 200);
-      })
-      .catch((error) => console.log(error));
-  }, [Ratings, deletedBtnClicked]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:3000/user`)
+  //     .then((response) => {
+  //       setTimeout(() => {
+  //         setFeedbacks(response.data);
+  //       }, 200);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, [Ratings, deletedBtnClicked]);
 
   return (
     <div className="py-12 px-6 bg-gray-100 h-screen">
@@ -71,6 +71,7 @@ export default function Reviewlist() {
           {/* Right Section */}
           <div className="flex justify-start md:justify-end">
             <div className="bg-white p-2 rounded-xl shadow-sm border border-gray-200">
+        
               <Pagination
                 reviewsFunc={setFeedbacks}
                 reviewsData={feedbacks}
@@ -116,7 +117,7 @@ export default function Reviewlist() {
                   <Rating
                     name="size-small"
                     readOnly
-                    defaultValue={items.rating}
+                    value={Number(items.rating)}
                     size="small"
                   />
                 </div>

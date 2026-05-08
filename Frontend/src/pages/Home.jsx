@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import useLoader from "../custom/Loader";
-import Dashboard from "./Dashboard";
+// import Dashboard from "./Dashboard";
 
 export default function Home() {
   let { loading } = useLoader();
@@ -105,7 +105,7 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <Dashboard />
+      {/* <Dashboard /> */}
     </div>
   ) : (
     <div className="flex justify-center items-center gap-2 py-20 h-200">
