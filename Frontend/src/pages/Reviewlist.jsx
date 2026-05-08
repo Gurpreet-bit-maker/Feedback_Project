@@ -39,76 +39,79 @@ export default function Reviewlist() {
   // }, [Ratings, deletedBtnClicked]);
 
   return (
-    <div className="py-12 px-6 bg-gray-100 h-screen">
-      <div className="max-w-5xl mx-auto">
-        <House
-          size={40}
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-100 to-slate-200 px-4 py-8">
+      {/* Home Button */}
+      <div className="fixed bottom-5 right-5 z-50">
+        <button
           onClick={() => navigate("/")}
-          className="bg-green-300 text-black p-1 rounded-md "
-        />
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-5 mb-8">
-          {/* Left Section */}
-          <div className="space-y-3">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800">
-                Our Customer Feedback
-              </h1>
+          className="bg-indigo-600 hover:bg-indigo-700 transition p-3 rounded-2xl shadow-xl text-white"
+        >
+          <House size={24} />
+        </button>
+      </div>
 
-              <p className="text-sm text-gray-500 mt-1">
-                Don't take our word for it. Trust our customers.
-              </p>
-            </div>
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 mb-10">
+          {/* Left */}
+          <div>
+            <h1 className="text-4xl font-bold text-gray-800">
+              Customer Feedback
+            </h1>
+
+            <p className="text-gray-500 mt-2 text-sm">
+              Real reviews from our valuable customers ✨
+            </p>
 
             <button
               onClick={deleteAll_method}
-              className="bg-red-500 hover:bg-red-600 transition text-white px-5 py-2 rounded-lg shadow-sm"
+              className="mt-5 bg-red-500 hover:bg-red-600 transition text-white px-5 py-3 rounded-2xl shadow-md text-sm font-medium"
             >
               Delete All
             </button>
           </div>
 
-          {/* Right Section */}
-          <div className="flex justify-start md:justify-end">
-            <div className="bg-white p-2 rounded-xl shadow-sm border border-gray-200">
-        
-              <Pagination
-                reviewsFunc={setFeedbacks}
-                reviewsData={feedbacks}
-                count={count}
-                countFunc={setCount}
-              />
-            </div>
+          {/* Right */}
+          <div className="bg-white px-5 py-3 rounded-2xl shadow-md border border-gray-100 flex items-center gap-4">
+            <span className="text-gray-500 text-sm font-medium">{count}/3</span>
+
+            <Pagination
+              reviewsFunc={setFeedbacks}
+              reviewsData={feedbacks}
+              count={count}
+              countFunc={setCount}
+            />
           </div>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {feedbacks.map((items, index) => {
             return (
               <div
                 key={index}
-                className="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition border border-gray-100"
+                className="bg-white rounded-3xl shadow-md hover:shadow-2xl transition duration-300 p-5 border border-gray-100"
               >
                 {/* Top */}
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex items-center gap-2">
+                <div className="flex justify-between items-start">
+                  <div className="flex items-center gap-3">
                     <Avatar
                       sx={{
                         bgcolor: deepOrange[600],
-                        width: 34,
-                        height: 34,
+                        width: 45,
+                        height: 45,
+                        fontSize: "18px",
                       }}
                     >
                       {items.username?.[0]?.toUpperCase()}
                     </Avatar>
 
                     <div>
-                      <h2 className="text-sm font-semibold text-gray-800">
+                      <h2 className="font-semibold text-gray-800 text-base">
                         {items.username}
                       </h2>
 
-                      <p className="text-[11px] text-gray-400">
+                      <p className="text-xs text-gray-400 mt-[2px]">
                         {new Date(items.createdAt).toLocaleDateString()}
                       </p>
                     </div>
@@ -123,17 +126,21 @@ export default function Reviewlist() {
                 </div>
 
                 {/* Message */}
-                <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                  {items.msg}
-                </p>
+                <div className="mt-5">
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {items.msg}
+                  </p>
+                </div>
 
-                {/* Buttons */}
-                <Buttons
-                  feedbacks={feedbacks}
-                  index={index}
-                  Ratings={Ratings}
-                  setRating={setRating}
-                />
+                {/* Bottom */}
+                <div className="mt-6 flex justify-end">
+                  <Buttons
+                    feedbacks={feedbacks}
+                    index={index}
+                    Ratings={Ratings}
+                    setRating={setRating}
+                  />
+                </div>
               </div>
             );
           })}

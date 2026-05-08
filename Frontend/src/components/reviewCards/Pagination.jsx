@@ -19,7 +19,7 @@ function Pagination({ reviewsFunc, reviewsData, countFunc, count }) {
 
   return (
     <>
-      <span className="flex justify-center text-gray-500 text-sm">{`${count}/${3}`}</span>
+      
       <div className="flex gap-x-2">
         <button
           onClick={() => {

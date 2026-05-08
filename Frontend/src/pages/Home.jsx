@@ -47,49 +47,59 @@ export default function Home() {
   }, [ispending]);
 
   return loading ? (
-    <div className="bg-gray-100 py-12 flex justify-center h-190">
-      <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 w-[420px]  rounded-xl shadow-lg p-6">
-        {/* Reviews link */}
-        <div className="flex justify-between items-center mb-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-100 to-slate-200 flex justify-center items-center px-4 py-10">
+      <div className="w-full max-w-md md:max-w-lg bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
+        {/* Top */}
+        <div className="flex justify-between items-center mb-8">
           <NavLink
             to="/feeds"
             className={({ isActive }) =>
-              `text-sm px-3 py-1 rounded-md ${
-                isActive ? "bg-yellow-300" : "bg-gray-200"
+              `text-sm px-4 py-2 rounded-xl font-medium transition hover:bg-black hover:text-white ${
+                isActive
+                  ? "bg-indigo-500 text-white"
+                  : "bg-gray-100 text-gray-700"
               }`
             }
           >
             Reviews
           </NavLink>
 
-          <span className="bg-yellow-400 text-xs px-2 py-[2px] rounded-md font-semibold">
+          <span className="bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full font-semibold">
             {feedbackCounts}
           </span>
         </div>
 
         {/* Heading */}
-        <h1 className="text-2xl font-semibold text-white text-center mb-4">
-          Create Your Feedback
-        </h1>
-        {/* username */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">
+            Create Your Feedback
+          </h1>
+
+          <p className="text-sm text-gray-500 mt-2">
+            Share your thoughts with us ✨
+          </p>
+        </div>
+
+        {/* Username */}
         <input
           type="text"
           value={userName}
-          placeholder="Enter name..."
-          className="border border-gray-300 p-2 rounded-md w-full placeholder:text-gray-400 outline-none"
+          placeholder="Enter your name..."
+          className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-400 placeholder:text-gray-400 text-gray-700"
           onChange={(e) => setUserName(e.target.value)}
         />
-        {/* textarea */}
+
+        {/* Textarea */}
         <textarea
-          className="w-full bg-white mt-10 border rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-400"
-          rows="10"
+          className="w-full mt-6 bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none placeholder:text-gray-400 text-gray-700"
+          rows="7"
           placeholder="Write feedback here..."
           onChange={(e) => setTextvalue(e.target.value)}
           value={textValue}
         />
 
-        {/* rating + button */}
-        <div className="flex justify-between items-center mt-4">
+        {/* Bottom */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mt-6">
           <Rating
             name="size-large"
             defaultValue={0}
@@ -99,20 +109,20 @@ export default function Home() {
           <button
             disabled={ispending}
             onClick={postReview}
-            className="bg-black text-white text-sm px-4 py-2 rounded-md hover:bg-gray-800 transition"
+            className="bg-indigo-600 hover:bg-indigo-700 transition text-white text-sm px-6 py-3 rounded-2xl shadow-md"
           >
-            {ispending ? "Submitting..." : "Submit"}
+            {ispending ? "Submitting..." : "Submit Feedback"}
           </button>
         </div>
       </div>
-      {/* <Dashboard /> */}
     </div>
   ) : (
-    <div className="flex justify-center items-center gap-2 py-20 h-200">
+    <div className="min-h-screen flex justify-center items-center gap-2">
       <span className="text-gray-600 text-lg">Loading</span>
-      <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"></div>
-      <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce delay-150"></div>
-      <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce delay-300"></div>
+
+      <div className="w-3 h-3 bg-indigo-500 rounded-full animate-bounce"></div>
+      <div className="w-3 h-3 bg-indigo-500 rounded-full animate-bounce delay-150"></div>
+      <div className="w-3 h-3 bg-indigo-500 rounded-full animate-bounce delay-300"></div>
     </div>
   );
 }
