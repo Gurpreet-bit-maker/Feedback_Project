@@ -21,7 +21,8 @@ export default function Reviewlist() {
     try {
       let deleted = await axios.delete("http://localhost:3000/user");
       setDeletedAllBtn((prev) => !prev);
-      console.log(deleted);
+      console.log(deleted.data);
+      setFeedbacks([]);
     } catch (error) {
       console.log(error);
     }
@@ -38,6 +39,7 @@ export default function Reviewlist() {
   //     .catch((error) => console.log(error));
   // }, [Ratings, deletedBtnClicked]);
 
+  console.log(feedbacks);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-100 to-slate-200 px-4 py-8">
       {/* Home Button */}
@@ -93,8 +95,8 @@ export default function Reviewlist() {
                 className="bg-white rounded-3xl shadow-md hover:shadow-2xl transition duration-300 p-5 border border-gray-100"
               >
                 {/* Top */}
-                <div className="flex justify-between items-start">
-                  <div className="flex items-center gap-3">
+                <div className="flex flex-col items-start gap-y-1">
+                  <div className="flex justify-between gap-3  w-full">
                     <Avatar
                       sx={{
                         bgcolor: deepOrange[600],
@@ -116,29 +118,33 @@ export default function Reviewlist() {
                       </p>
                     </div>
                   </div>
-
-                  <Rating
-                    name="size-small"
-                    readOnly
-                    value={Number(items.rating)}
-                    size="small"
-                  />
+                  {/* middle */}
+                  <div className="flex flex-col gap-y-4 w-full">
+                    <Rating
+                      name="size-small"
+                      readOnly
+                      value={Number(items.rating)}
+                      size="small"
+                    />
+                    <div className="flex justify-center">
+                      <img
+                        className="w-60 h-80 rounded-sm shadow-sm md:w-90"
+                        src={items.userimg}
+                        loading="lazy"
+                        alt={items.userimg}
+                      />
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {items.msg}
+                    </p>
+                  </div>
                 </div>
-
-                {/* Message */}
-                <div className="mt-5">
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {items.msg}
-                  </p>
-                </div>
-
                 {/* Bottom */}
-                <div className="mt-6 flex justify-end">
+                <div className="mt-6 flex justify-start">
                   <Buttons
                     feedbacks={feedbacks}
+                    setFeedbacks={setFeedbacks}
                     index={index}
-                    Ratings={Ratings}
-                    setRating={setRating}
                   />
                 </div>
               </div>

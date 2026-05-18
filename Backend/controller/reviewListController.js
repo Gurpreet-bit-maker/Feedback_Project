@@ -10,6 +10,8 @@ exports.getReviewData = async (req, res) => {
         .skip(skip)
         .limit(4),
     ]);
+    console.log(name);
+
     res.status(201).json(name);
   } catch (error) {
     res.status(401).json("not found feedback");

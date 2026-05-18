@@ -29,5 +29,5 @@ app.use("/", reviewRead_Router);
 app.use("/", deletedRouter);
 
 app.listen(3000, () => {
-  console.log("listing on 5000 port");
+  console.log("listing on 3000 port");
 });

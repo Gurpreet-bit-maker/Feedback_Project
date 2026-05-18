@@ -3,18 +3,19 @@ import Result from "./Notecontext";
 import axios from "axios";
 
 export let Run = (prop) => {
-  let [feedbackCounts, setsubject] = useState();
+  let [feedbackDataBycontext, setsubject] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/user/data")
+      .get("http://localhost:3000/user")
       .then((response) => {
         setsubject(response.data);
+        console.log(response.data);
       })
       .catch((error) => console.log(error));
   }, []);
 
   return (
-    <Result.Provider value={{ feedbackCounts }}>
+    <Result.Provider value={{ feedbackDataBycontext }}>
       {prop.children}
     </Result.Provider>
   );

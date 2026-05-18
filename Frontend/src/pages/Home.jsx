@@ -11,18 +11,36 @@ export default function Home() {
   let [textValue, setTextvalue] = useState("");
   let [rating, setRating] = useState();
   let [userName, setUserName] = useState("");
-  let userFeedback = { msg: textValue, rating: rating, username: userName };
+  let [img, setImg] = useState(null);
   let [ispending, setLoader] = useState();
+  // let [feedbackCounts, setsubject] = useState();
+
+  // let userFeedback = {
+  //   msg: textValue,
+  //   rating: rating,
+  //   username: userName,
+  //   userimg: img,
+  // };
   // Post feedback
   let postReview = async () => {
     try {
-      if (userFeedback.msg !== "") {
+      if (textValue !== "") {
         setLoader(true);
-        await axios.post("http://localhost:3000/user", userFeedback);
+        let formdata = new FormData();
+        formdata.append("username", userName);
+        formdata.append("msg", textValue);
+        formdata.append("avtar", img);
+        formdata.append("rating", rating);
+
+        let postedData = await axios.post(
+          "http://localhost:3000/user",
+          formdata,
+        );
+
         setUserName("");
         setTextvalue("");
-
-        console.log(userFeedback);
+        setImg(null);
+        console.log(postedData.data);
       } else {
         alert("please write any feedback");
       }
@@ -30,21 +48,21 @@ export default function Home() {
       console.log(error);
     }
   };
+  // timer
   setTimeout(() => {
     setLoader(false);
   }, 5000);
 
   // Get feedback count numbers
-  let [feedbackCounts, setsubject] = useState();
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/user")
-      .then((response) => {
-        setsubject(response.data.length);
-        console.log(feedbackCounts);
-      })
-      .catch((error) => console.log(error));
-  }, [ispending]);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3000/user")
+  //     .then((response) => {
+  //       setsubject(response.data.length);
+  //       console.log(feedbackCounts.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, [loading]);
 
   return loading ? (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-100 to-slate-200 flex justify-center items-center px-4 py-10">
@@ -64,9 +82,9 @@ export default function Home() {
             Reviews
           </NavLink>
 
-          <span className="bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full font-semibold">
+          {/* <span className="bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full font-semibold">
             {feedbackCounts}
-          </span>
+          </span> */}
         </div>
 
         {/* Heading */}
@@ -80,7 +98,16 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Username */}
+        {/* UserImg */}
+        <input
+          type="file"
+          name="avtar"
+          placeholder="Img ..."
+          className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-400 placeholder:text-gray-400 text-gray-700"
+          onChange={(e) => setImg(e.target.files[0])}
+        />
+        {/* UserName */}
+
         <input
           type="text"
           value={userName}
@@ -108,7 +135,7 @@ export default function Home() {
 
           <button
             disabled={ispending}
-            onClick={postReview}
+            onClick={() => postReview()}
             className="bg-indigo-600 hover:bg-indigo-700 transition text-white text-sm px-6 py-3 rounded-2xl shadow-md"
           >
             {ispending ? "Submitting..." : "Submit Feedback"}

@@ -7,6 +7,7 @@ let feedbackSchema = new mongoose.Schema({
   userEmail: { type: String },
   username: { type: String, require: true },
   role: { type: String, default: "user" },
+  userimg: String,
   counted: { type: Number, default: 5 },
   createdAt: { type: Date, default: Date.now },
 });

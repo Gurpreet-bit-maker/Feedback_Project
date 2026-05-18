@@ -17,7 +17,6 @@ function App() {
       {/* <Reducer/> */}
       <Run>
         <BrowserRouter>
-          
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/feeds" element={<Reviewlist />} />

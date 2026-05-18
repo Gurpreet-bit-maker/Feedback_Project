@@ -1,13 +1,27 @@
 let feedbackModel = require("../models/schema");
+const { cloudinaryMethod } = require("../utility/cloudnary");
 
 exports.reviewPostMethod = async (req, res) => {
-  console.log(req.body);
-
   try {
+    console.log("review payload:", req.body, req.file);
+
+    if (req.file) {
+      const uploadResult = await cloudinaryMethod(req.file.path);
+      if (uploadResult && uploadResult.secure_url) {
+        // console.log(uploadResult.secure_url);
+
+        req.body.userimg = uploadResult.secure_url;
+      }
+    }
+
     let storedFeedback = await feedbackModel.create(req.body);
-    console.log(storedFeedback);
-    res.status(201).json("feedback stored successfully");
+    res
+      .status(201)
+      .json({ message: "feedback stored successfully", data: storedFeedback });
   } catch (error) {
-    res.status(500).json("server side error");
+    console.error("reviewPostMethod error:", error);
+    res
+      .status(500)
+      .json({ message: "server side error", error: error.message });
   }
 };
