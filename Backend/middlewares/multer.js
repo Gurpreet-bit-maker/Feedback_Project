@@ -17,30 +17,37 @@
 // const upload = multer({ storage });
 // module.exports = upload;
 
-let multer = require("multer");
-let fs = require("fs");
-let path = require("path");
+// let fs = require("fs");
+// let path = require("path");
 
-let dirPath = path.join(__dirname, "../public.temp");
-fs.mkdirSync(dirPath, { recursive: true }); //! important
+// let dirPath = path.join(__dirname, "../public.temp");
+// fs.mkdirSync(dirPath, { recursive: true }); //! important
 
 // storage configration
-let storage = multer.diskStorage({
-  destination: function (res, file, cb) {
-    cb(null, dirPath);
-  },
-  filename: function (res, file, cb) {
-    cb(null, `${Date.now()}_${file.originalname}`);
-  },
-});
+// let storage = multer.diskStorage({
+//   destination: function (res, file, cb) {
+//     cb(null, dirPath);
+//   },
+//   filename: function (res, file, cb) {
+//     cb(null, `${Date.now()}_${file.originalname}`);
+//   },
+// });
+
+//! memoryStorage
+let multer = require("multer");
+let storage = multer.memoryStorage();
 // todo pending
 let fileFilter = async (req, file, cb) => {
   if (file.mimetype.startsWith("image/")) {
     cb(null, true);
   } else {
-    cb(new Error("only images!"), false);
+    cb(new Error("only images"), false);
   }
 };
 
-let configration = multer({ storage, fileFilter });
+let configration = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 300 * 1024 },
+});
 module.exports = configration;

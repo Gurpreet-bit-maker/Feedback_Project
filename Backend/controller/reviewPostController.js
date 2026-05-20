@@ -31,11 +31,11 @@ let { cloudinaryMethod } = require("../utility/cloudnary");
 
 exports.revieMethod = async (req, res) => {
   try {
-    // console.log(req.body, req.file);
+    console.log(req.body, req.file);
 
     //* sending path at cloudinary
     if (req.file) {
-      let userFile = await cloudinaryMethod(req.file.path);
+      let userFile = await cloudinaryMethod(req.file.buffer);
       if (userFile.secure_url) {
         req.body.userimg = userFile.secure_url;
         console.log(req.body);

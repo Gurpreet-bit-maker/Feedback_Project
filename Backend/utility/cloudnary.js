@@ -8,25 +8,25 @@
 //     process.env.CLOUDINARY_SECRET || process.env.CLOUDNARY_SECRATE_KEY,
 // });
 
-// exports.cloudinaryMethod = async (filepath) => {
-//   if (!filepath) return null;
-//   console.log("this is file path", filepath);
+// exports.cloudinaryMethod = async (buffer) => {
+//   if (!buffer) return null;
+//   console.log("this is file path", buffer);
 
 //   try {
-//     const response = await cloudinary.uploader.upload(filepath, {
+//     const response = await cloudinary.uploader.upload(buffer, {
 //       resource_type: "auto",
 //     });
 
-//     if (fs.existsSync(filepath)) {
-//       fs.unlinkSync(filepath);
+//     if (fs.existsSync(buffer)) {
+//       fs.unlinkSync(buffer);
 //     }
 
 //     console.log("uploaded file on cloudinary", response);
 //     return response;
 //   } catch (error) {
 //     console.error("Cloudinary upload failed:", error);
-//     if (fs.existsSync(filepath)) {
-//       fs.unlinkSync(filepath);
+//     if (fs.existsSync(buffer)) {
+//       fs.unlinkSync(buffer);
 //     }
 //     throw error;
 //   }
@@ -43,25 +43,19 @@ cloudinary.config({
     process.env.CLOUDINARY_SECRET || process.env.CLOUDNARY_SECRATE_KEY,
 });
 
-exports.cloudinaryMethod = async (filepath) => {
-  if (!filepath) {
+exports.cloudinaryMethod = async (buffer) => {
+  if (!buffer) {
     return null;
   }
   try {
-    let response = await cloudinary.uploader.upload(filepath, {
-      resource_type: "auto",
-    });
-
-    if (fs.existsSync(filepath)) {
-      fs.unlinkSync(filepath);
-    }
+    let response = await cloudinary.uploader.upload(
+      `data:image/png;base64,${buffer.toString("base64")}`,
+    );
 
     console.log("cloudinary uploaded", response);
     return response;
   } catch (error) {
     console.log(error);
-    if (fs.existsSync(filepath)) {
-      fs.unlinkSync(filepath);
-    }
+    throw error;
   }
 };
