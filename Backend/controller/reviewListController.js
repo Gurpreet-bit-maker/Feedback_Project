@@ -1,17 +1,21 @@
 let feedbackModel = require("../models/schema");
 
 exports.getReviewData = async (req, res) => {
-  let page = req.query.page;
+  let page = Number(req.query.page);
   let skip = (page - 1) * 4;
   try {
     let [name] = await Promise.all([
-      feedbackModel
-        .aggregate([{ $sort: { username: 1 } }])
-        .skip(skip)
-        .limit(4),
+      feedbackModel.aggregate([
+        {
+          $addFields: {
+            usernameLower: { $toLower: "$username" },
+          },
+        },
+        { $sort: { usernameLower: 1 } },
+        { $skip: skip },
+        { $limit: 4 },
+      ]),
     ]);
-    console.log(name);
-
     res.status(201).json(name);
   } catch (error) {
     res.status(401).json("not found feedback");

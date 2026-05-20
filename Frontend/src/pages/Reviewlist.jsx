@@ -39,7 +39,7 @@ export default function Reviewlist() {
   //     .catch((error) => console.log(error));
   // }, [Ratings, deletedBtnClicked]);
 
-  console.log(feedbacks);
+  // console.log(feedbacks);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-100 to-slate-200 px-4 py-8">
       {/* Home Button */}
@@ -128,11 +128,12 @@ export default function Reviewlist() {
                     />
                     <div className="flex justify-center">
                       <img
-                        className="w-60 h-80 rounded-sm shadow-sm md:w-90"
+                        className="w-70 h-80 rounded-sm shadow-sm md:w-90"
                         src={items.userimg}
                         loading="lazy"
                         alt={items.userimg}
                       />
+                      {/* <iframe src={items.userimg} width="50%" height="400px" /> */}
                     </div>
                     <p className="text-sm text-gray-600 leading-relaxed">
                       {items.msg}

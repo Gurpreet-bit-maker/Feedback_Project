@@ -4,16 +4,16 @@ import axios from "axios";
 
 export let Run = (prop) => {
   let [feedbackDataBycontext, setsubject] = useState([]);
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/user")
-      .then((response) => {
-        setsubject(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3000/user")
+  //     .then((response) => {
+  //       setsubject(response.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, []);
 
+  console.log("helloji sir");
   return (
     <Result.Provider value={{ feedbackDataBycontext }}>
       {prop.children}

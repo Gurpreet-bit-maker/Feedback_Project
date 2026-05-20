@@ -13,14 +13,7 @@ export default function Home() {
   let [userName, setUserName] = useState("");
   let [img, setImg] = useState(null);
   let [ispending, setLoader] = useState();
-  // let [feedbackCounts, setsubject] = useState();
 
-  // let userFeedback = {
-  //   msg: textValue,
-  //   rating: rating,
-  //   username: userName,
-  //   userimg: img,
-  // };
   // Post feedback
   let postReview = async () => {
     try {
@@ -45,7 +38,8 @@ export default function Home() {
         alert("please write any feedback");
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data);
+      alert("please upload only images");
     }
   };
   // timer
@@ -58,8 +52,8 @@ export default function Home() {
   //   axios
   //     .get("http://localhost:3000/user")
   //     .then((response) => {
-  //       setsubject(response.data.length);
-  //       console.log(feedbackCounts.data);
+  //       // setsubject(response.data.length);
+  //       console.log(response.data);
   //     })
   //     .catch((error) => console.log(error));
   // }, [loading]);

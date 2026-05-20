@@ -15,13 +15,23 @@ function Pagination({ reviewsFunc, reviewsData, countFunc, count }) {
           `http://localhost:3000/user?page=${count}`,
         );
         reviewsFunc(maxData.data);
-        // console.log(maxData.data);
+        console.log(maxData.data);
+        console.log(count);
       } catch (error) {
         console.log(error);
       }
     };
     paginationMethod();
   }, [count]);
+
+  let func = () => {
+    return function func2(cd) {
+      cd(null);
+      console.log("wrong");
+    };
+
+  };
+  func();
 
   // const eventTringer = (e) => {
   //   if (e.target.innerText == "home") {
