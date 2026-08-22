@@ -34,7 +34,7 @@ export default function Buttons({ feedbacks, setFeedbacks, index }) {
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   // Ui
   
