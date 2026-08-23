@@ -1,9 +1,14 @@
-let express = require("express");
+import express from "express";
 let router = express.Router();
+import userReviewController from "../controller/Feedbacks/reviewListController.js";
+import loginToken_Middleware from "../middlewares/tokenMiddleware.js";
 
-let userReviewController = require("../controller/reviewListController");
 // route url
 
-router.get("/user", userReviewController.getReviewData);
+router.get(
+  "/user",
+  loginToken_Middleware.tokenMiddlewareMethod,
+  userReviewController.getReviewData,
+);
 
-module.exports = router;
+export default router;

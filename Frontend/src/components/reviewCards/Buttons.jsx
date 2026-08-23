@@ -3,12 +3,13 @@ import Button from "@mui/material/Button";
 
 import axios from "axios";
 import { use, useEffect, useRef, useState } from "react";
+import LinkAndCommentBtns from "./LinkAndCommentBtns";
 
 export default function Buttons({ feedbacks, setFeedbacks, index }) {
   let [count, setcount] = useState(0);
-
   let refBtn = useRef();
   let timeBtnRef = useRef();
+  const [isLike, setIslike] = useState(false);
 
   // setInterval(() => {
   //   let time = new Date();
@@ -37,9 +38,9 @@ export default function Buttons({ feedbacks, setFeedbacks, index }) {
   };
 
   // Ui
-  
+
   return (
-    <div className="flex justify-between text-white mt-5 text-[12px]">
+    <div className="flex justify-between mt-5 px-5 text-[12px] border w-full">
       <Button
         sx={{
           width: { xs: 2, sm: 8, md: 150 },
@@ -50,6 +51,8 @@ export default function Buttons({ feedbacks, setFeedbacks, index }) {
       >
         Delete
       </Button>
+
+      <LinkAndCommentBtns isLike={isLike} setIslike={setIslike} index={index} />
       {/* <button
         ref={refBtn}
         className="text-black"
@@ -59,6 +62,7 @@ export default function Buttons({ feedbacks, setFeedbacks, index }) {
       >
         click me {count}
       </button> */}
+
     </div>
   );
 }

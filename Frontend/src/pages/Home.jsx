@@ -4,15 +4,26 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import useLoader from "../custom/Loader";
+import { useNavigate } from "react-router-dom";
 // import Dashboard from "./Dashboard";
 
 export default function Home() {
+  let navigate = useNavigate();
   let { loading } = useLoader();
   let [textValue, setTextvalue] = useState("");
   let [rating, setRating] = useState();
   let [userName, setUserName] = useState("");
   let [img, setImg] = useState(null);
   let [ispending, setLoader] = useState();
+  const [timeing, setTime] = useState("");
+
+  useEffect(() => {
+    setInterval(() => {
+      let currentTime = new Date().toLocaleTimeString();
+
+      setTime(currentTime);
+    }, 1000);
+  }, []);
 
   // Post feedback
   let postReview = async () => {
@@ -28,54 +39,63 @@ export default function Home() {
         let postedData = await axios.post(
           "http://localhost:3000/user",
           formdata,
+          { withCredentials: true },
         );
 
         setUserName("");
         setTextvalue("");
         setImg(null);
-        console.log(postedData.data);
       } else {
         alert("please write any feedback");
       }
     } catch (error) {
       console.log(error.response.data);
-      alert("please upload only images");
     }
   };
   // timer
   setTimeout(() => {
     setLoader(false);
   }, 5000);
+  // console.log(postReview);
 
-  // Get feedback count numbers
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3000/user")
-  //     .then((response) => {
-  //       // setsubject(response.data.length);
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, [loading]);
+  let logOutClick = async () => {
+    try {
+      await axios.post(
+        "http://localhost:3000/user/logout",
+        {},
+        { withCredentials: true },
+      );
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return loading ? (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-100 to-slate-200 flex justify-center items-center px-4 py-10">
       <div className="w-full max-w-md md:max-w-lg bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
         {/* Top */}
         <div className="flex justify-between items-center mb-8">
+          <button
+            onClick={logOutClick}
+            className="bg-red-500 text-white px-4 py-2 rounded-md"
+          >
+            Logout
+          </button>
           <NavLink
             to="/feeds"
             className={({ isActive }) =>
-              `text-sm px-4 py-2 rounded-xl font-medium transition hover:bg-black hover:text-white ${
-                isActive
-                  ? "bg-indigo-500 text-white"
-                  : "bg-gray-100 text-gray-700"
+              `text-sm px-4 py-2 rounded-xl font-medium transition hover:bg-black hover:text-white ${isActive
+                ? "bg-indigo-500 text-white"
+                : "bg-gray-100 text-gray-700"
               }`
             }
           >
             Reviews
           </NavLink>
-
+          <span className="bg-gray-900 text-green-400 px-3 py-1 rounded-lg font-mono">
+            {timeing}
+          </span>
           {/* <span className="bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full font-semibold">
             {feedbackCounts}
           </span> */}

@@ -26,23 +26,36 @@
 //   }
 // };
 //! file access and share to cloudinary and then give response and store in DB.
-let feedbackModel = require("../models/schema");
-let { cloudinaryMethod } = require("../utility/cloudnary");
+import feedbackModel from "../../models/Feedback.js";
+import { cloudinaryMethod } from "../../utility/cloudnary.js";
 
-exports.revieMethod = async (req, res) => {
+export const revieMethod = async (req, res) => {
   try {
-    console.log(req.body, req.file);
+    let { msg, username, rating } = req.body;
+    let userAuthToken = req.user.userEmail;
 
-    //* sending path at cloudinary
     if (req.file) {
       let userFile = await cloudinaryMethod(req.file.buffer);
+
       if (userFile.secure_url) {
-        req.body.userimg = userFile.secure_url;
-        console.log(req.body);
+        let storedInDb = await feedbackModel.create({
+          msg,
+          username,
+          rating,
+          userAuthToken,
+          userimg: userFile.secure_url,
+        });
+
+        return res.status(201).json(storedInDb);
       }
     }
-    //* store in db
-    let storedInDb = await feedbackModel.create(req.body);
+
+    let storedInDb = await feedbackModel.create({
+      msg,
+      username,
+      rating,
+      userAuthToken,
+    });
 
     res.status(201).json(storedInDb);
   } catch (error) {

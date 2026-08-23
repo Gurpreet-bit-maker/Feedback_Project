@@ -1,16 +1,25 @@
-let express = require("express");
-let app = express();
-let mongoose = require("mongoose");
-let cors = require("cors");
-require("dotenv").config();
-let reviewRead_Router = require("./routes/reviewRouter");
-let reviewPost_Router = require("./routes/reviewPostRouter");
-let averageReview_Router = require("./routes/averageReviewRouter");
-let deletedRouter = require("./routes/deletedAllRouter");
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
-app.use(cors());
+import reviewRead_Router from "./routes/reviewRouter.js";
+import reviewPost_Router from "./routes/reviewPostRouter.js";
+import deletedRouter from "./routes/deletedAllRouter.js";
+import signupRouter from "./routes/ragisters/signup.js";
+import loginRouter from "./routes/ragisters/loginRoute.js";
+import logoutRouter from "./routes/ragisters/logoutRoute.js";
+import likePost from "./routes/likeAndComment.js";
+
+dotenv.config();
+
+let app = express();
+
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 async function main() {
   try {
@@ -20,13 +29,17 @@ async function main() {
     console.log("❌ Cannot connect to MongoDB Atlas", error);
   }
 }
+
 main();
 
-//*  middlewares
 app.use("/", reviewPost_Router);
 app.use("/", reviewRead_Router);
-// app.use("/", averageReview_Router);
 app.use("/", deletedRouter);
+
+app.use("/", signupRouter);
+app.use("/", loginRouter);
+app.use("/", logoutRouter);
+app.use("/", likePost);
 
 app.listen(3000, () => {
   console.log("listing on 3000 port");

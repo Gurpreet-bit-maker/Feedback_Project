@@ -10,28 +10,28 @@ function Pagination({ reviewsFunc, reviewsData, countFunc, count }) {
   useEffect(() => {
     let paginationMethod = async () => {
       try {
-        console.log(count);
+        // console.log(count);
         let maxData = await axios.get(
           `http://localhost:3000/user?page=${count}`,
+          { withCredentials: true },
         );
         reviewsFunc(maxData.data);
-        console.log(maxData.data);
-        console.log(count);
+        // console.log(maxData.data);
+       
       } catch (error) {
-        console.log(error);
+        console.log(error.response.data);
       }
     };
     paginationMethod();
   }, [count]);
 
-  let func = () => {
-    return function func2(cd) {
-      cd(null);
-      console.log("wrong");
-    };
-
-  };
-  func();
+  // let func = () => {
+  //   return function func2(cd) {
+  //     cd(null);
+  //     console.log("wrong");
+  //   };
+  // };
+  // func();
 
   // const eventTringer = (e) => {
   //   if (e.target.innerText == "home") {
@@ -39,15 +39,15 @@ function Pagination({ reviewsFunc, reviewsData, countFunc, count }) {
   //   }
   // };
 
-  let reducer = (state, action) => {
-    switch (action.type) {
-      case "inc":
-        return { count: state.count + 1 };
-      case "dec":
-        return { count: state.count - 1 };
-    }
-  };
-  let [state, dispatch] = useReducer(reducer, { count: 0 });
+  // let reducer = (state, action) => {
+  //   switch (action.type) {
+  //     case "inc":
+  //       return { count: state.count + 1 };
+  //     case "dec":
+  //       return { count: state.count - 1 };
+  //   }
+  // };
+  // let [state, dispatch] = useReducer(reducer, { count: 0 });
 
   return (
     <>

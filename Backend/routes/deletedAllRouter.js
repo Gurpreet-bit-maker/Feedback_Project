@@ -1,8 +1,9 @@
-let express = require("express");
+import express from "express";
 let router = express.Router();
 
-let deleteAllController = require("../controller/deletedAllController");
+import deleteAllController from "../controller/deletedAllController";
 
 router.delete("/user", deleteAllController.deletedMethod);
 router.delete("/user/:id", deleteAllController.deleteOneMethod);
-module.exports = router;
+
+export default router;

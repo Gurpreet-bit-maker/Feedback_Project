@@ -1,6 +1,6 @@
-let feedbackModel = require("../models/schema");
+import feedbackModel from "../../models/Feedback.js";
 
-exports.deletedMethod = async (req, res) => {
+export const deletedMethod = async (req, res) => {
   try {
     let deletedAll = await feedbackModel.deleteMany({});
     res.json(deletedAll);
@@ -8,7 +8,8 @@ exports.deletedMethod = async (req, res) => {
     console.log(error);
   }
 };
-exports.deleteOneMethod = async (req, res) => {
+
+export const deleteOneMethod = async (req, res) => {
   try {
     let deleteId = req.params.id;
     let deletedReview = await feedbackModel.findByIdAndDelete(deleteId);

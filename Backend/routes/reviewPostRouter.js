@@ -1,20 +1,22 @@
-let express = require("express");
-let router = express.Router();
-let reviewPortController = require("../controller/reviewPostController");
-const upload = require("../middlewares/multer");
+import express from "express";
+const router = express.Router();
+import reviewPortController from "../controller/reviewPostController.js";
+import { tokenMiddlewareMethod } from "../middlewares/tokenMiddleware.js";
+import upload from "../middlewares/multer.js";
 
 // route path
 router.post(
   "/user",
+  tokenMiddlewareMethod,
   (req, res, next) =>
     upload.single("avtar")(req, res, (err) => {
       if (err) {
-        // fs.writeFileSync("index.txt", "Hello world this is created by Fs.");
         return res.status(400).json({ message: "only images!" });
       }
       next();
     }),
+
   reviewPortController.revieMethod,
 );
 
-module.exports = router;
+export default router;

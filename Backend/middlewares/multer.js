@@ -36,18 +36,18 @@
 //! memoryStorage
 let multer = require("multer");
 let storage = multer.memoryStorage();
-// todo pending
-let fileFilter = async (req, file, cb) => {
+
+let fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image/")) {
     cb(null, true);
   } else {
-    cb(new Error("only images"), false);
+    cb(new Error("only images"), false); // ✅ error throw hoga
   }
 };
 
 let configration = multer({
   storage,
-  fileFilter,
-  limits: { fileSize: 300 * 1024 },
+  fileFilter, // ✅
 });
+
 module.exports = configration;
