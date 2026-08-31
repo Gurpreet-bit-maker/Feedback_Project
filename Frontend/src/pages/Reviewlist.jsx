@@ -6,9 +6,10 @@ import Avatar from "@mui/material/Avatar";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import Buttons from "../components/reviewCards/Buttons";
 import { useNavigate } from "react-router-dom";
-import CreatedAt from "../components/reviewCards/CreatedAt";
 import Pagination from "../components/reviewCards/Pagination";
 import { Trash2, House } from "lucide-react";
+import LikeAndCom from "../components/RobinComp/LikeAndCom";
+// import CardReview from "../components/RobinComp/CardReview";
 
 export default function Reviewlist() {
   let navigate = useNavigate();
@@ -135,18 +136,33 @@ export default function Reviewlist() {
                       />
                       {/* <iframe src={items.userimg} width="50%" height="400px" /> */}
                     </div>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      {items.msg}
-                    </p>
+                    <div className="flex justify-between items-center gap-2 w-full mt-4">
+                      <p className="text-l bold text-gray-600 leading-relaxed">
+                        {items.msg}
+                      </p>
+                      <div className="flex items-center shrink-0 mr-5">
+                        <LikeAndCom />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 {/* Bottom */}
-                <div className="mt-6 flex justify-start">
-                  <Buttons
-                    feedbacks={feedbacks}
-                    setFeedbacks={setFeedbacks}
-                    index={index}
+                <div className="flex items-center justify-between gap-2 w-full mt-3">
+                  {/* Bada Comment Box */}
+                  <input
+                    type="text"
+                    placeholder="Write a comment..."
+                    className="flex-1 text-xs px-3 py-1.5 border border-gray-300 rounded-lg outline-none focus:border-indigo-500 h-15 focus:ring-1 focus:ring-indigo-500 "
                   />
+
+                  {/* Chota Delete Button Container */}
+                  <div className="shrink-0 transform scale-75 origin-right mb-5">
+                    <Buttons
+                      feedbacks={feedbacks}
+                      setFeedbacks={setFeedbacks}
+                      index={index}
+                    />
+                  </div>
                 </div>
               </div>
             );
